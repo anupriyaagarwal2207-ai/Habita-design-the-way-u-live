@@ -9,7 +9,6 @@ import {
   ArrowRight,
   Layers,
   Eye,
-  DollarSign,
   Cpu,
   Home,
   Bed,
@@ -70,7 +69,7 @@ const FEATURES = [
     glow: 'shadow-emerald-500/30',
   },
   {
-    icon: DollarSign,
+    icon: IndianRupee,
     title: 'Cost Estimator',
     description: 'Instant, itemised construction cost breakdowns by category—foundation, finishes, MEP and more.',
     color: 'from-amber-500 to-orange-600',
@@ -151,7 +150,7 @@ export default function HomePage() {
     bathrooms: 2,
     plotWidth: 35,
     plotLength: 55,
-    budget: 200000,
+    budget: 2000000,
     requirements: ['garden'],
   });
 
@@ -558,19 +557,19 @@ export default function HomePage() {
               {/* Budget */}
               <div className="mb-6">
                 <label className="text-xs text-slate-400 font-bold uppercase tracking-widest mb-3 block">
-                  Budget: <span className="text-indigo-300">${config.budget.toLocaleString()}</span>
+                  Budget: <span className="text-indigo-300">₹{config.budget.toLocaleString('en-IN')}</span>
                 </label>
                 <input
                   type="range"
-                  min={50000}
-                  max={1000000}
-                  step={10000}
+                  min={500000}
+                  max={10000000}
+                  step={100000}
                   value={config.budget}
                   onChange={e => setConfig(p => ({ ...p, budget: Number(e.target.value) }))}
                   className="w-full accent-indigo-500 cursor-pointer"
                 />
                 <div className="flex justify-between text-xs text-slate-600 mt-1">
-                  <span>$50K</span><span>$1M</span>
+                  <span>₹5L</span><span>₹1Cr</span>
                 </div>
               </div>
 

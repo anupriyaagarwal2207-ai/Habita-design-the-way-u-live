@@ -50,11 +50,11 @@ Your response must strictly follow this JSON schema:
 export function calculateCostEstimate(config: DesignConfig): CostEstimate {
   const area = config.plotWidth * config.plotLength;
   
-  // Base rates per sq ft based on style
-  let baseRate = 150; // Minimalist
-  if (config.style === 'Modern') baseRate = 180;
-  if (config.style === 'Traditional') baseRate = 165;
-  if (config.style === 'Luxury') baseRate = 280;
+  // Base rates per sq ft based on style (in INR)
+  let baseRate = 1500; // Minimalist
+  if (config.style === 'Modern') baseRate = 1800;
+  if (config.style === 'Traditional') baseRate = 1650;
+  if (config.style === 'Luxury') baseRate = 2800;
 
   // Add cost for rooms
   const totalCost = area * baseRate;

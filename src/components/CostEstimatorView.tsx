@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { HousePlan } from '../types/designer';
-import { DollarSign, BarChart3, Info, Download, ShieldCheck } from 'lucide-react';
+import { IndianRupee, BarChart3, Info, Download, ShieldCheck } from 'lucide-react';
 
 interface CostEstimatorViewProps {
   plan: HousePlan;
@@ -15,9 +15,9 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
 
   // Format currency helper
   const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       maximumFractionDigits: 0
     }).format(val);
   };
@@ -29,7 +29,7 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-950/50 border border-slate-850 p-5 rounded-2xl">
         <div className="flex items-center gap-3.5 border-b md:border-b-0 md:border-r border-slate-850 pb-3.5 md:pb-0 md:pr-4">
           <div className="w-11 h-11 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-center text-green-400">
-            <DollarSign className="w-6 h-6" />
+            <IndianRupee className="w-6 h-6" />
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] text-slate-500 font-bold tracking-wider uppercase">Estimated Total Cost</span>

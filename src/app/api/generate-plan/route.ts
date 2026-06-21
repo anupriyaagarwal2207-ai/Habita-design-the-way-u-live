@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
             content: `Generate a custom layout for a ${config.style} style house.
 Plot size: ${config.plotWidth} ft width x ${config.plotLength} ft length.
 Bedrooms: ${config.bedrooms}, Bathrooms: ${config.bathrooms}.
-Budget: $${config.budget}.
+Budget: ₹${config.budget} INR.
 Special requirements: ${config.requirements.join(', ')}.`
           }
         ],

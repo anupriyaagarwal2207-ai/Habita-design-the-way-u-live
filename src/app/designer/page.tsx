@@ -27,7 +27,7 @@ import {
   HelpCircle,
   FileCode,
   Image as ImageIcon,
-  DollarSign,
+  IndianRupee,
   Share2,
   Trash2,
   BookOpen,
@@ -47,7 +47,7 @@ export default function Home() {
   // Config state
   const [config, setConfig] = useState<DesignConfig>({
     style: 'Modern',
-    budget: 150000,
+    budget: 1500000,
     bedrooms: 2,
     bathrooms: 2,
     plotWidth: 30,
@@ -90,7 +90,7 @@ export default function Home() {
     const quickConfigRaw = localStorage.getItem('habita_quick_config');
     let startConfig = {
       style: 'Modern' as const,
-      budget: 180000,
+      budget: 1800000,
       bedrooms: 2,
       bathrooms: 2,
       plotWidth: 35,
@@ -258,10 +258,10 @@ export default function Home() {
     const area = updatedPlan.config.plotWidth * updatedPlan.config.plotLength;
     
     // Simple dynamic cost recalculate
-    let baseRate = 150;
-    if (updatedPlan.config.style === 'Modern') baseRate = 180;
-    if (updatedPlan.config.style === 'Luxury') baseRate = 280;
-    if (updatedPlan.config.style === 'Traditional') baseRate = 165;
+    let baseRate = 1500;
+    if (updatedPlan.config.style === 'Modern') baseRate = 1800;
+    if (updatedPlan.config.style === 'Luxury') baseRate = 2800;
+    if (updatedPlan.config.style === 'Traditional') baseRate = 1650;
     
     const totalCost = area * baseRate;
     const updatedCost = {
@@ -438,13 +438,13 @@ export default function Home() {
               <div className="flex flex-col gap-1.5">
                 <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-slate-455">
                   <span>Target Budget</span>
-                  <span className="text-indigo-400 font-black">${config.budget.toLocaleString()}</span>
+                  <span className="text-indigo-400 font-black">₹{config.budget.toLocaleString('en-IN')}</span>
                 </div>
                 <input
                   type="range"
-                  min="50000"
-                  max="800000"
-                  step="10000"
+                  min="500000"
+                  max="8000000"
+                  step="100000"
                   value={config.budget}
                   onChange={(e) => setConfig(prev => ({ ...prev, budget: Number(e.target.value) }))}
                   className="w-full accent-indigo-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
@@ -561,7 +561,7 @@ export default function Home() {
                 { id: '3d', name: '3D Walkthrough', icon: Eye },
                 { id: 'ai', name: 'AI Interiors', icon: ImageIcon },
                 { id: 'vastu', name: 'Vastu Analysis', icon: FlameKindling },
-                { id: 'cost', name: 'Cost Estimator', icon: DollarSign }
+                { id: 'cost', name: 'Cost Estimator', icon: IndianRupee }
               ].map((tab) => {
                 const Icon = tab.icon;
                 return (
