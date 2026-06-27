@@ -208,21 +208,25 @@ export default function HomePage() {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-              <Compass className="w-4 h-4 text-black dark:text-white" style={{ animation: 'spin 12s linear infinite' }} />
+              <Compass className={`w-4 h-4 ${scrolled ? "text-black dark:text-white" : "text-white"}`} style={{ animation: 'spin 12s linear infinite' }} />
             </div>
             <div>
               <span className="font-black tracking-tight bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent text-5xl leading-none block drop-shadow-[0_0_18px_rgba(139,92,246,0.7)]">
                 Habita
               </span>
-              <span className="text-[9px] text-slate-500 font-semibold uppercase tracking-widest">design the way u live</span>
+              <span className={`text-[9px] font-semibold uppercase tracking-widest ${scrolled ? "text-slate-500" : "text-slate-400"}`}>design the way u live</span>
             </div>
           </div>
 
           {/* Nav links */}
-          <div className="hidden md:flex items-center gap-4 text-sm text-slate-400 font-medium">
-            <a href="#features" className="hover:text-black dark:text-white transition">Features</a>
-            <a href="#gallery" className="hover:text-black dark:text-white transition">Gallery</a>
-            <a href="#configurator" className="hover:text-black dark:text-white transition">Configurator</a>
+          <div className={`hidden md:flex items-center gap-4 text-sm font-medium ${
+            scrolled 
+              ? "text-slate-600 dark:text-slate-400" 
+              : "text-slate-350"
+          }`}>
+            <a href="#features" className={`transition ${scrolled ? "hover:text-black dark:hover:text-white" : "hover:text-white"}`}>Features</a>
+            <a href="#gallery" className={`transition ${scrolled ? "hover:text-black dark:hover:text-white" : "hover:text-white"}`}>Gallery</a>
+            <a href="#configurator" className={`transition ${scrolled ? "hover:text-black dark:hover:text-white" : "hover:text-white"}`}>Configurator</a>
           </div>
 
           {/* CTA */}
@@ -231,9 +235,9 @@ export default function HomePage() {
             <Link
               href="/designer"
               onClick={launchDesigner}
-              className="flex items-center gap-1 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-indigo-600/25 active:scale-95"
+              className="flex items-center gap-1 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-indigo-600/25 active:scale-95"
             >
-              <Sparkles className="w-4 h-4" />
+              <Sparkles className="w-4 h-4 text-white" />
               Open Designer
             </Link>
           </div>
@@ -253,9 +257,9 @@ export default function HomePage() {
             className="object-cover object-center scale-105"
             style={{ filter: 'brightness(0.35) saturate(1.2)' }}
           />
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FDF6EC]/60 via-transparent to-[#FDF6EC] dark:from-[#070b13]/60 dark:via-transparent dark:to-[#070b13]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FDF6EC]/50 via-transparent to-transparent dark:from-[#070b13]/50 dark:via-transparent dark:to-transparent" />
+          {/* Gradient overlays — forced dark for the hero image to match screenshot context */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#070b13]/60 via-transparent to-[#070b13]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070b13]/50 via-transparent to-transparent" />
         </div>
 
         {/* Floating orbs */}
@@ -264,22 +268,22 @@ export default function HomePage() {
 
         {/* Hero content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-indigo-300 text-xs font-semibold tracking-wide mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/25 text-[#a5b4fc] text-xs font-semibold tracking-wide mb-8">
             <Sparkles className="w-3 h-3" />
             AI-Powered Architectural Design
           </div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none mb-6">
-            <span className="text-black dark:text-white">Design your</span>
+            <span className="text-white">Design your</span>
             <br />
             <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
               dream home
             </span>
             <br />
-            <span className="text-black dark:text-white">in minutes.</span>
+            <span className="text-white">in minutes.</span>
           </h1>
 
-          <p className="text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-zinc-300 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
             Habita combines AI floor plan generation, interactive 2D editing, immersive 3D walkthroughs,
             Vastu analysis, and real-time cost estimation — all in one beautiful tool.
           </p>
@@ -288,24 +292,24 @@ export default function HomePage() {
             <Link
               href="/designer"
               onClick={launchDesigner}
-              className="flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-bold text-base transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
+              className="flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-base transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
             >
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-5 h-5 text-white" />
               Start Designing for Free
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
               href="#features"
-              className="flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-black dark:text-white font-semibold text-base transition-all duration-200 backdrop-blur-sm"
+              className="flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-semibold text-base transition-all duration-200 backdrop-blur-sm"
             >
-              <Play className="w-4 h-4" />
+              <Play className="w-4 h-4 text-white" />
               See How It Works
             </a>
           </div>
 
           {/* Scroll cue */}
           <div className="mt-16 flex justify-center animate-bounce">
-            <ChevronDown className="w-6 h-6 text-slate-500" />
+            <ChevronDown className="w-6 h-6 text-zinc-500" />
           </div>
         </div>
       </section>
@@ -609,9 +613,9 @@ export default function HomePage() {
               <Link
                 href="/designer"
                 onClick={launchDesigner}
-                className="flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-bold text-base transition-all duration-200 shadow-xl shadow-indigo-600/25 active:scale-95 group"
+                className="flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-base transition-all duration-200 shadow-xl shadow-indigo-600/25 active:scale-95 group"
               >
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-5 h-5 text-white" />
                 Launch Designer
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -634,9 +638,9 @@ export default function HomePage() {
           </p>
           <Link
             href="/designer"
-            className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-black text-lg transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
+            className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-lg transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
           >
-            <Sparkles className="w-6 h-6" />
+            <Sparkles className="w-6 h-6 text-white" />
             Start Designing — It&apos;s Free
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>

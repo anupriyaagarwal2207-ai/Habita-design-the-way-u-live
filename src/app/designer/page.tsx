@@ -338,9 +338,9 @@ export default function Home() {
           {activePlan && (
             <button
               onClick={handleSavePlan}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 font-semibold text-xs transition active:scale-95 shadow-md shadow-indigo-600/10 border border-indigo-500/30"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-xs transition active:scale-95 shadow-md shadow-indigo-600/10 border border-indigo-500/30"
             >
-              <Save className="w-3.5 h-3.5" />
+              <Save className="w-3.5 h-3.5 text-white" />
               Save Design
             </button>
           )}
@@ -482,11 +482,11 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isGenerating}
-                className="w-full mt-2 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 hover:from-indigo-500 hover:to-purple-500 disabled:from-slate-800 disabled:to-slate-800 text-black dark:text-white font-bold py-3 rounded-xl text-sm transition active:scale-98 shadow-md flex items-center justify-center gap-2 group cursor-pointer"
+                className="w-full mt-2 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 hover:from-indigo-500 hover:to-purple-500 disabled:from-slate-800 disabled:to-slate-800 text-white font-bold py-3 rounded-xl text-sm transition active:scale-98 shadow-md flex items-center justify-center gap-2 group cursor-pointer"
               >
                 {isGenerating ? (
                   <>
-                    <svg className="animate-spin h-4 w-4 text-black dark:text-white" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
@@ -494,9 +494,9 @@ export default function Home() {
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4 text-amber-300 group-hover:animate-pulse" />
+                    <Sparkles className="w-4 h-4 text-amber-350 group-hover:animate-pulse" />
                     Generate AI Layout
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition" />
+                    <ArrowRight className="w-4 h-4 ml-1 text-white group-hover:translate-x-1 transition" />
                   </>
                 )}
               </button>
@@ -654,11 +654,11 @@ export default function Home() {
                       <button
                         onClick={handleGenerateConceptImage}
                         disabled={isGeneratingImage}
-                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-black dark:text-white font-bold py-2.5 rounded-xl text-xs transition active:scale-98 shadow flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-2.5 rounded-xl text-xs transition active:scale-98 shadow flex items-center justify-center gap-1.5 cursor-pointer"
                       >
                         {isGeneratingImage ? (
                           <>
-                            <svg className="animate-spin h-3.5 w-3.5 text-black dark:text-white" fill="none" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                             </svg>
@@ -666,7 +666,7 @@ export default function Home() {
                           </>
                         ) : (
                           <>
-                            <Sparkles className="w-3.5 h-3.5" />
+                            <Sparkles className="w-3.5 h-3.5 text-white" />
                             Render New Concept
                           </>
                         )}
@@ -745,7 +745,7 @@ export default function Home() {
 
               <button
                 onClick={() => handleSaveApiKey(userApiKey)}
-                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-black dark:text-white transition shadow shadow-indigo-600/20"
+                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-white transition shadow shadow-indigo-600/20"
               >
                 Save Changes
               </button>

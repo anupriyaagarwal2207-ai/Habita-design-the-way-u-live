@@ -489,7 +489,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
               <button
                 key={type}
                 onClick={() => handleAddRoom(type)}
-                className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-xs bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 text-slate-200 transition active:scale-95 text-left font-medium capitalize group"
+                className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-xs bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 text-white transition active:scale-95 text-left font-medium capitalize group"
               >
                 <span
                   className="w-2.5 h-2.5 rounded-full shrink-0 group-hover:scale-110 transition"
@@ -508,7 +508,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
               <button
                 key={type}
                 onClick={() => handleAddFurniture(type)}
-                className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 text-slate-200 transition active:scale-95 text-left font-medium capitalize"
+                className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 text-white transition active:scale-95 text-left font-medium capitalize"
               >
                 <Square className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                 <span className="truncate">{FURNITURE_SIZES[type].name}</span>
