@@ -36,7 +36,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
     // 2. Camera setup
     const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    
+
     // Position camera for Dollhouse view by default
     const plotW = plan.config.plotWidth;
     const plotL = plan.config.plotLength;
@@ -71,7 +71,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
     sunLight.shadow.mapSize.height = 2048;
     sunLight.shadow.camera.near = 0.5;
     sunLight.shadow.camera.far = 150;
-    
+
     const d = Math.max(plotW, plotL) * 0.8;
     sunLight.shadow.camera.left = -d;
     sunLight.shadow.camera.right = d;
@@ -92,7 +92,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
     groundGeo.rotateX(-Math.PI / 2);
     // Move geometry origin to match our 2D coordinate system where bottom-left is (0,0)
     groundGeo.translate(plotW / 2, 0, plotL / 2);
-    
+
     // Choose floor material colors based on plan
     const floorColor = plan.materialPalette.floorColor || '#475569';
     const groundMat = new THREE.MeshStandardMaterial({
@@ -100,7 +100,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
       roughness: 0.2,
       metalness: 0.1
     });
-    
+
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.receiveShadow = true;
     houseGroup.add(ground);
@@ -116,7 +116,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
     const wallHeight = 9.0;
     const wallThickness = 0.4;
     const wallColor = plan.materialPalette.wallColor || '#f3f4f6';
-    
+
     const wallMat = new THREE.MeshStandardMaterial({
       color: new THREE.Color(wallColor),
       roughness: 0.8,
@@ -137,7 +137,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
       const roomFloorGeo = new THREE.PlaneGeometry(room.width - 0.05, room.height - 0.05);
       roomFloorGeo.rotateX(-Math.PI / 2);
       roomFloorGeo.translate(room.x + room.width / 2, 0.01, room.y + room.height / 2);
-      
+
       const roomFloorMat = new THREE.MeshStandardMaterial({
         color: new THREE.Color(room.color).multiplyScalar(0.7), // darken color for floor tint
         roughness: 0.4,
@@ -176,11 +176,11 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
         const leftSectionW = (rw - doorWidth) / 2;
         renderWall(rx + leftSectionW / 2, rz, leftSectionW, wallThickness, 'bottom-inner-left');
         renderWall(rx + rw - leftSectionW / 2, rz, leftSectionW, wallThickness, 'bottom-inner-right');
-        
+
         // Add lintel beam over the door (top part of wall)
         const lintelGeo = new THREE.BoxGeometry(doorWidth, wallHeight - 7.0, wallThickness);
         const lintelMesh = new THREE.Mesh(lintelGeo, wallMat);
-        lintelMesh.position.set(rx + leftSectionW + doorWidth/2, 7.0 + (wallHeight - 7.0)/2, rz);
+        lintelMesh.position.set(rx + leftSectionW + doorWidth / 2, 7.0 + (wallHeight - 7.0) / 2, rz);
         houseGroup.add(lintelMesh);
       }
 
@@ -193,10 +193,10 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
         const leftSectionW = (rw - doorWidth) / 2;
         renderWall(rx + leftSectionW / 2, rz + rh, leftSectionW, wallThickness, 'top-inner-left');
         renderWall(rx + rw - leftSectionW / 2, rz + rh, leftSectionW, wallThickness, 'top-inner-right');
-        
+
         const lintelGeo = new THREE.BoxGeometry(doorWidth, wallHeight - 7.0, wallThickness);
         const lintelMesh = new THREE.Mesh(lintelGeo, wallMat);
-        lintelMesh.position.set(rx + leftSectionW + doorWidth/2, 7.0 + (wallHeight - 7.0)/2, rz + rh);
+        lintelMesh.position.set(rx + leftSectionW + doorWidth / 2, 7.0 + (wallHeight - 7.0) / 2, rz + rh);
         houseGroup.add(lintelMesh);
       }
 
@@ -209,10 +209,10 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
         const bottomSectionH = (rh - doorWidth) / 2;
         renderWall(rx, rz + bottomSectionH / 2, wallThickness, bottomSectionH, 'left-inner-bottom');
         renderWall(rx, rz + rh - bottomSectionH / 2, wallThickness, bottomSectionH, 'left-inner-top');
-        
+
         const lintelGeo = new THREE.BoxGeometry(wallThickness, wallHeight - 7.0, doorWidth);
         const lintelMesh = new THREE.Mesh(lintelGeo, wallMat);
-        lintelMesh.position.set(rx, 7.0 + (wallHeight - 7.0)/2, rz + bottomSectionH + doorWidth/2);
+        lintelMesh.position.set(rx, 7.0 + (wallHeight - 7.0) / 2, rz + bottomSectionH + doorWidth / 2);
         houseGroup.add(lintelMesh);
       }
 
@@ -228,7 +228,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
         const lintelGeo = new THREE.BoxGeometry(wallThickness, wallHeight - 7.0, doorWidth);
         const lintelMesh = new THREE.Mesh(lintelGeo, wallMat);
-        lintelMesh.position.set(rx + rw, 7.0 + (wallHeight - 7.0)/2, rz + bottomSectionH + doorWidth/2);
+        lintelMesh.position.set(rx + rw, 7.0 + (wallHeight - 7.0) / 2, rz + bottomSectionH + doorWidth / 2);
         houseGroup.add(lintelMesh);
       }
 
@@ -237,7 +237,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
         const poolWaterGeo = new THREE.PlaneGeometry(room.width - 0.2, room.height - 0.2);
         poolWaterGeo.rotateX(-Math.PI / 2);
         poolWaterGeo.translate(room.x + room.width / 2, 0.05, room.y + room.height / 2);
-        
+
         const poolWaterMat = new THREE.MeshStandardMaterial({
           color: '#06b6d4',
           transparent: true,
@@ -267,12 +267,12 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
       // We want to translate coordinates to center.
       const fX = item.x + item.width / 2;
       const fZ = item.y + item.height / 2; // 2D y is 3D z
-      
+
       fGroup.position.set(fX, 0, fZ);
-      
+
       // Apply rotation (in degrees) converted to radians
       fGroup.rotation.y = - (item.rotation * Math.PI) / 180;
-      
+
       const w = item.width;
       const h = item.height; // in feet
 
@@ -289,7 +289,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           // Headboard
           const headGeo = new THREE.BoxGeometry(w, 3, 0.4);
           const headMesh = new THREE.Mesh(headGeo, woodMat);
-          headMesh.position.set(0, 1.5, -h/2 + 0.2);
+          headMesh.position.set(0, 1.5, -h / 2 + 0.2);
           headMesh.castShadow = true;
           fGroup.add(headMesh);
 
@@ -303,13 +303,13 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           // Pillows (2 pillows)
           const pillowW = (w - 1.0) / 2;
           const pillowGeo = new THREE.BoxGeometry(pillowW, 0.2, 1.2);
-          
+
           const pillow1 = new THREE.Mesh(pillowGeo, pillowMat);
-          pillow1.position.set(-w/4, 1.45, -h/2 + 1.2);
+          pillow1.position.set(-w / 4, 1.45, -h / 2 + 1.2);
           fGroup.add(pillow1);
 
           const pillow2 = new THREE.Mesh(pillowGeo, pillowMat);
-          pillow2.position.set(w/4, 1.45, -h/2 + 1.2);
+          pillow2.position.set(w / 4, 1.45, -h / 2 + 1.2);
           fGroup.add(pillow2);
           break;
         }
@@ -325,20 +325,20 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           // Backrest
           const backGeo = new THREE.BoxGeometry(w, 2.2, 0.5);
           const backMesh = new THREE.Mesh(backGeo, fabricMat);
-          backMesh.position.set(0, 1.1, -h/2 + 0.25);
+          backMesh.position.set(0, 1.1, -h / 2 + 0.25);
           backMesh.castShadow = true;
           fGroup.add(backMesh);
 
           // Armrests
           const armGeo = new THREE.BoxGeometry(0.5, 1.5, h);
-          
+
           const armLeft = new THREE.Mesh(armGeo, fabricMat);
-          armLeft.position.set(-w/2 + 0.25, 0.75, 0);
+          armLeft.position.set(-w / 2 + 0.25, 0.75, 0);
           armLeft.castShadow = true;
           fGroup.add(armLeft);
 
           const armRight = new THREE.Mesh(armGeo, fabricMat);
-          armRight.position.set(w/2 - 0.25, 0.75, 0);
+          armRight.position.set(w / 2 - 0.25, 0.75, 0);
           armRight.castShadow = true;
           fGroup.add(armRight);
 
@@ -363,10 +363,10 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           // 4 Legs
           const legGeo = new THREE.CylinderGeometry(0.1, 0.1, 2.5);
           const legLocations = [
-            [-w/2 + 0.2, -h/2 + 0.2],
-            [w/2 - 0.2, -h/2 + 0.2],
-            [-w/2 + 0.2, h/2 - 0.2],
-            [w/2 - 0.2, h/2 - 0.2]
+            [-w / 2 + 0.2, -h / 2 + 0.2],
+            [w / 2 - 0.2, -h / 2 + 0.2],
+            [-w / 2 + 0.2, h / 2 - 0.2],
+            [w / 2 - 0.2, h / 2 - 0.2]
           ];
           legLocations.forEach(([lx, lz]) => {
             const leg = new THREE.Mesh(legGeo, metalMat);
@@ -385,15 +385,15 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
           const backGeo = new THREE.BoxGeometry(w, 1.5, 0.1);
           const backMesh = new THREE.Mesh(backGeo, woodMat);
-          backMesh.position.set(0, 2.25, -h/2 + 0.05);
+          backMesh.position.set(0, 2.25, -h / 2 + 0.05);
           fGroup.add(backMesh);
 
           const legGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.5);
           const legPos = [
-            [-w/2 + 0.1, -h/2 + 0.1],
-            [w/2 - 0.1, -h/2 + 0.1],
-            [-w/2 + 0.1, h/2 - 0.1],
-            [w/2 - 0.1, h/2 - 0.1]
+            [-w / 2 + 0.1, -h / 2 + 0.1],
+            [w / 2 - 0.1, -h / 2 + 0.1],
+            [-w / 2 + 0.1, h / 2 - 0.1],
+            [w / 2 - 0.1, h / 2 - 0.1]
           ];
           legPos.forEach(([lx, lz]) => {
             const leg = new THREE.Mesh(legGeo, metalMat);
@@ -423,7 +423,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           const standMesh = new THREE.Mesh(standGeo, metalMat);
           standMesh.position.set(0, 1.65, 0);
           fGroup.add(standMesh);
-          
+
           const baseStand = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.05, 0.6), metalMat);
           baseStand.position.set(0, 1.425, 0);
           fGroup.add(baseStand);
@@ -440,14 +440,14 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
           // Side support panels
           const supportGeo = new THREE.BoxGeometry(0.12, 2.4, h);
-          
+
           const supportL = new THREE.Mesh(supportGeo, woodMat);
-          supportL.position.set(-w/2 + 0.06, 1.2, 0);
+          supportL.position.set(-w / 2 + 0.06, 1.2, 0);
           supportL.castShadow = true;
           fGroup.add(supportL);
 
           const supportR = new THREE.Mesh(supportGeo, woodMat);
-          supportR.position.set(w/2 - 0.06, 1.2, 0);
+          supportR.position.set(w / 2 - 0.06, 1.2, 0);
           supportR.castShadow = true;
           fGroup.add(supportR);
 
@@ -467,7 +467,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
         case 'toilet': {
           const porcelainMat = new THREE.MeshStandardMaterial({ color: '#f1f5f9', roughness: 0.1 });
-          
+
           // Bowl
           const bowlGeo = new THREE.BoxGeometry(w * 0.8, 1.3, h * 0.6);
           const bowl = new THREE.Mesh(bowlGeo, porcelainMat);
@@ -493,14 +493,14 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
           // Glass walls (2 walls, since cornered usually)
           const glassGeo = new THREE.BoxGeometry(w, wallHeight * 0.8, 0.08);
-          
+
           const glassBack = new THREE.Mesh(glassGeo, glassMat);
-          glassBack.position.set(0, (wallHeight * 0.8)/2, -h/2 + 0.04);
+          glassBack.position.set(0, (wallHeight * 0.8) / 2, -h / 2 + 0.04);
           fGroup.add(glassBack);
 
           const glassSideGeo = new THREE.BoxGeometry(0.08, wallHeight * 0.8, h);
           const glassSide = new THREE.Mesh(glassSideGeo, glassMat);
-          glassSide.position.set(-w/2 + 0.04, (wallHeight * 0.8)/2, 0);
+          glassSide.position.set(-w / 2 + 0.04, (wallHeight * 0.8) / 2, 0);
           fGroup.add(glassSide);
           break;
         }
@@ -518,11 +518,11 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           const basin = new THREE.Mesh(basinGeo, mattressMat);
           basin.position.set(0, 2.55, 0);
           fGroup.add(basin);
-          
+
           // Faucet
           const faucetGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.5);
           const faucet = new THREE.Mesh(faucetGeo, metalMat);
-          faucet.position.set(0, 2.8, -h*0.35);
+          faucet.position.set(0, 2.8, -h * 0.35);
           fGroup.add(faucet);
           break;
         }
@@ -537,7 +537,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           // Handle lines
           const handleGeo = new THREE.BoxGeometry(0.05, 1.8, 0.1);
           const handle = new THREE.Mesh(handleGeo, blackPlasticMat);
-          handle.position.set(w/2 - 0.1, 4.0, h/2 + 0.05);
+          handle.position.set(w / 2 - 0.1, 4.0, h / 2 + 0.05);
           fGroup.add(handle);
           break;
         }
@@ -561,7 +561,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           const b1 = new THREE.Mesh(burnerGeo, metalMat);
           b1.position.set(-w * 0.2, 2.75, 0);
           fGroup.add(b1);
-          
+
           const b2 = new THREE.Mesh(burnerGeo, metalMat);
           b2.position.set(w * 0.2, 2.75, 0);
           fGroup.add(b2);
@@ -570,7 +570,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
         case 'plant': {
           // Pot
-          const potGeo = new THREE.CylinderGeometry(w*0.3, w*0.2, 1.2);
+          const potGeo = new THREE.CylinderGeometry(w * 0.3, w * 0.2, 1.2);
           const pot = new THREE.Mesh(potGeo, blackPlasticMat);
           pot.position.y = 0.6;
           pot.castShadow = true;
@@ -582,7 +582,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           stem.position.y = 1.35;
           fGroup.add(stem);
 
-          const sphereGeo = new THREE.SphereGeometry(w*0.48, 8, 8);
+          const sphereGeo = new THREE.SphereGeometry(w * 0.48, 8, 8);
           const foliage = new THREE.Mesh(sphereGeo, foliageMat);
           foliage.position.y = 2.4;
           foliage.castShadow = true;
@@ -592,7 +592,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
         case 'car': {
           const carBodyMat = new THREE.MeshStandardMaterial({ color: '#ef4444', roughness: 0.1, metalness: 0.8 });
-          
+
           // Lower Body
           const lowerGeo = new THREE.BoxGeometry(w, 1.8, h);
           const lower = new THREE.Mesh(lowerGeo, carBodyMat);
@@ -612,15 +612,15 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           const win = new THREE.Mesh(winGeo, blackPlasticMat);
           win.position.set(0, 2.3, -h * 0.05);
           fGroup.add(win);
-          
+
           // Wheels (4)
           const wheelGeo = new THREE.CylinderGeometry(0.6, 0.6, 0.35);
           wheelGeo.rotateZ(Math.PI / 2);
           const wheelsPos = [
-            [-w/2 - 0.1, 0.6, -h * 0.25],
-            [w/2 + 0.1, 0.6, -h * 0.25],
-            [-w/2 - 0.1, 0.6, h * 0.25],
-            [w/2 + 0.1, 0.6, h * 0.25]
+            [-w / 2 - 0.1, 0.6, -h * 0.25],
+            [w / 2 + 0.1, 0.6, -h * 0.25],
+            [-w / 2 - 0.1, 0.6, h * 0.25],
+            [w / 2 + 0.1, 0.6, h * 0.25]
           ];
           wheelsPos.forEach(([wx, wy, wz]) => {
             const wheel = new THREE.Mesh(wheelGeo, blackPlasticMat);
@@ -635,7 +635,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           const baseBox = new THREE.Mesh(new THREE.BoxGeometry(w, 0.3, h), woodMat);
           baseBox.position.y = 0.25;
           fGroup.add(baseBox);
-          
+
           const backSlope = new THREE.Mesh(new THREE.BoxGeometry(w - 0.1, 0.15, h * 0.5), woodMat);
           backSlope.position.set(0, 0.8, -h * 0.25);
           backSlope.rotation.x = -0.6; // tilt up
@@ -694,7 +694,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
         // Update camera position
         camera.position.x += moveX * delta;
         camera.position.z += moveZ * delta;
-        
+
         // Boundaries constraint: Keep user inside the plot with simple padding
         camera.position.x = Math.max(1, Math.min(plotW - 1, camera.position.x));
         camera.position.z = Math.max(1, Math.min(plotL - 1, camera.position.z));
@@ -702,7 +702,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
 
         // Apply mouse looking angle
         const pitch = cameraRotation.current.pitch;
-        
+
         const target = new THREE.Vector3();
         target.x = camera.position.x + Math.sin(yaw) * Math.cos(pitch);
         target.y = camera.position.y + Math.sin(pitch);
@@ -744,7 +744,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
       if (viewMode !== 'fp' || !isMouseDown) return;
       const movementX = e.clientX - prevMouseX;
       const movementY = e.clientY - prevMouseY;
-      
+
       prevMouseX = e.clientX;
       prevMouseY = e.clientY;
 
@@ -804,11 +804,10 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
       <div className="absolute top-4 right-4 flex gap-2 z-10 select-none">
         <button
           onClick={toggleViewMode}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold border transition active:scale-95 shadow-lg ${
-            viewMode === 'fp' 
-              ? 'bg-indigo-600 hover:bg-indigo-500 border-indigo-400 text-white' 
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold border transition active:scale-95 shadow-lg ${viewMode === 'fp'
+              ? 'bg-indigo-600 hover:bg-indigo-500 border-indigo-400 text-black dark:text-white'
               : 'bg-slate-900/90 hover:bg-slate-800/90 border-slate-700/80 text-indigo-300'
-          }`}
+            }`}
         >
           {viewMode === 'fp' ? <Move className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
           {viewMode === 'fp' ? 'Dollhouse View (3D)' : 'First-Person Walk'}
@@ -824,7 +823,7 @@ export default function Walkthrough3D({ plan }: Walkthrough3DProps) {
           </p>
         </div>
       </div>
-      
+
       {/* 3D Compass indicator */}
       <div className="absolute top-4 left-4 flex flex-col items-center gap-1 bg-slate-900/80 px-2.5 py-1.5 rounded-lg border border-slate-800 text-[10px] text-slate-400 select-none pointer-events-none">
         <Compass className="w-4 h-4 text-slate-500 animate-pulse" />

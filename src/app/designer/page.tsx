@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { 
-  DesignConfig, 
-  HousePlan, 
-  DesignStyle, 
-  Room, 
-  Furniture 
+import {
+  DesignConfig,
+  HousePlan,
+  DesignStyle,
+  Room,
+  Furniture
 } from '../../types/designer';
 import { generateProceduralPlan } from '../../utils/aiGenerator';
 import FloorPlanner2D from '../../components/FloorPlanner2D';
@@ -15,15 +15,15 @@ import Walkthrough3D from '../../components/Walkthrough3D';
 import VastuFengShui from '../../components/VastuFengShui';
 import CostEstimatorView from '../../components/CostEstimatorView';
 import confetti from 'canvas-confetti';
-import { 
-  Compass, 
-  Hammer, 
-  Sparkles, 
-  Eye, 
-  Layers, 
-  Save, 
-  Settings, 
-  FolderHeart, 
+import {
+  Compass,
+  Hammer,
+  Sparkles,
+  Eye,
+  Layers,
+  Save,
+  Settings,
+  FolderHeart,
   HelpCircle,
   FileCode,
   Image as ImageIcon,
@@ -57,14 +57,14 @@ export default function Home() {
 
   // Active plan state (initially null, user generates or loads one)
   const [activePlan, setActivePlan] = useState<HousePlan | null>(null);
-  
+
   // App UI states
   const [activeTab, setActiveTab] = useState<'2d' | '3d' | 'ai' | 'vastu' | 'cost'>('2d');
   const [isGenerating, setIsGenerating] = useState(false);
   const [savedPlans, setSavedPlans] = useState<HousePlan[]>([]);
   const [showSettings, setShowSettings] = useState(false);
   const [userApiKey, setUserApiKey] = useState('');
-  
+
   // Custom image generation prompt & result state
   const [aiPrompt, setAiPrompt] = useState('');
   const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
@@ -128,7 +128,7 @@ export default function Home() {
   const handleGeneratePlan = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsGenerating(true);
-    
+
     try {
       const response = await fetch('/api/generate-plan', {
         method: 'POST',
@@ -142,7 +142,7 @@ export default function Home() {
 
       const data = await response.json();
       setActivePlan(data.plan);
-      
+
       // Update image tab states
       setImageTabStyle(config.style);
       setAiPrompt(`High-quality photorealistic render of a ${config.style} style house interior, featuring detailed furnishings, luxury layout, volumetric soft lighting.`);
@@ -175,15 +175,15 @@ export default function Home() {
   const handleGenerateConceptImage = async () => {
     if (!activePlan) return;
     setIsGeneratingImage(true);
-    
+
     try {
       const response = await fetch('/api/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          prompt: aiPrompt, 
+        body: JSON.stringify({
+          prompt: aiPrompt,
           style: imageTabStyle,
-          userApiKey 
+          userApiKey
         })
       });
 
@@ -202,7 +202,7 @@ export default function Home() {
         const updatedVariations = [newVariation, ...(activePlan.variations || [])];
         const updatedPlan = { ...activePlan, variations: updatedVariations };
         setActivePlan(updatedPlan);
-        
+
         // Update local storage if this plan was already saved
         const updatedPlans = savedPlans.map(p => p.id === activePlan.id ? updatedPlan : p);
         setSavedPlans(updatedPlans);
@@ -219,7 +219,7 @@ export default function Home() {
   // Save plan to Library
   const handleSavePlan = () => {
     if (!activePlan) return;
-    
+
     const isAlreadySaved = savedPlans.some(p => p.id === activePlan.id);
     let updated: HousePlan[] = [];
 
@@ -231,7 +231,7 @@ export default function Home() {
 
     setSavedPlans(updated);
     localStorage.setItem('dream_house_plans', JSON.stringify(updated));
-    
+
     confetti({
       particleCount: 50,
       spread: 50,
@@ -256,13 +256,13 @@ export default function Home() {
   const handlePlanChange = (updatedPlan: HousePlan) => {
     // Dynamically re-evaluate Vastu & Cost estimates since coordinates/rooms changed
     const area = updatedPlan.config.plotWidth * updatedPlan.config.plotLength;
-    
+
     // Simple dynamic cost recalculate
     let baseRate = 1500;
     if (updatedPlan.config.style === 'Modern') baseRate = 1800;
     if (updatedPlan.config.style === 'Luxury') baseRate = 2800;
     if (updatedPlan.config.style === 'Traditional') baseRate = 1650;
-    
+
     const totalCost = area * baseRate;
     const updatedCost = {
       ...updatedPlan.costEstimate,
@@ -298,13 +298,18 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b13] text-slate-100 flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
-      
+    <div
+      className="min-h-screen overflow-x-hidden font-sans"
+      style={{
+        backgroundColor: "var(--background)",
+        color: "var(--foreground)",
+      }}
+    >
       {/* 1. Header Banner */}
       <header className="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md px-6 py-4 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-black dark:text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
               <Compass className="w-5 h-5 animate-spin-slow" />
             </div>
             <div className="flex flex-col">
@@ -329,7 +334,7 @@ export default function Home() {
           >
             <Settings className="w-4 h-4" />
           </button>
-          
+
           {activePlan && (
             <button
               onClick={handleSavePlan}
@@ -344,19 +349,19 @@ export default function Home() {
 
       {/* Main Split Layout */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden w-full mx-auto p-4 sm:p-6 gap-4">
-        
+
         {/* Left Column: Generator Form (3 cols) */}
         <div className="lg:col-span-3 flex flex-col gap-6 overflow-y-auto pr-1">
-          
+
           {/* Config form */}
           <div className="bg-slate-900/50 border border-slate-900 rounded-2xl p-5 backdrop-blur-md shadow-lg flex flex-col gap-4">
-            <h2 className="text-base font-extrabold text-white flex items-center gap-2 border-b border-slate-900 pb-3">
+            <h2 className="text-base font-extrabold text-black dark:text-white flex items-center gap-2 border-b border-slate-900 pb-3">
               <Sparkles className="w-5 h-5 text-indigo-400" />
               House Configuration
             </h2>
 
             <form onSubmit={handleGeneratePlan} className="flex flex-col gap-4">
-              
+
               {/* Style selection */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs text-slate-450 font-bold uppercase tracking-wider">Architectural Style</label>
@@ -366,11 +371,10 @@ export default function Home() {
                       key={style}
                       type="button"
                       onClick={() => setConfig(prev => ({ ...prev, style }))}
-                      className={`py-2 px-3 rounded-xl text-xs font-semibold border transition text-center ${
-                        config.style === style 
-                          ? 'bg-indigo-600/25 border-indigo-500 text-indigo-200' 
-                          : 'bg-slate-950/60 border-slate-900 text-slate-400 hover:bg-slate-900 hover:border-slate-800'
-                      }`}
+                      className={`py-2 px-3 rounded-xl text-xs font-semibold border transition text-center ${config.style === style
+                        ? 'bg-indigo-600/25 border-indigo-500 text-indigo-200'
+                        : 'bg-slate-950/60 border-slate-900 text-slate-400 hover:bg-slate-900 hover:border-slate-800'
+                        }`}
                     >
                       {style}
                     </button>
@@ -385,7 +389,7 @@ export default function Home() {
                   <select
                     value={config.bedrooms}
                     onChange={(e) => setConfig(prev => ({ ...prev, bedrooms: Number(e.target.value) }))}
-                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
+                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-black dark:text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
                   >
                     {[1, 2, 3, 4].map(n => (
                       <option key={n} value={n}>{n} Bedroom{n > 1 ? 's' : ''}</option>
@@ -398,7 +402,7 @@ export default function Home() {
                   <select
                     value={config.bathrooms}
                     onChange={(e) => setConfig(prev => ({ ...prev, bathrooms: Number(e.target.value) }))}
-                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
+                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-black dark:text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
                   >
                     {[1, 2, 3, 4].map(n => (
                       <option key={n} value={n}>{n} Bathroom{n > 1 ? 's' : ''}</option>
@@ -417,7 +421,7 @@ export default function Home() {
                     max="100"
                     value={config.plotWidth}
                     onChange={(e) => setConfig(prev => ({ ...prev, plotWidth: Number(e.target.value) }))}
-                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-black dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -429,7 +433,7 @@ export default function Home() {
                     max="150"
                     value={config.plotLength}
                     onChange={(e) => setConfig(prev => ({ ...prev, plotLength: Number(e.target.value) }))}
-                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="bg-slate-950 border border-slate-900 rounded-xl px-3 py-2 text-xs text-black dark:text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
@@ -462,11 +466,10 @@ export default function Home() {
                         key={req.id}
                         type="button"
                         onClick={() => handleToggleRequirement(req.id)}
-                        className={`px-3 py-1.5 rounded-full text-xs transition border ${
-                          active 
-                            ? 'bg-purple-950/40 border-purple-500 text-purple-200' 
-                            : 'bg-slate-950/60 border-slate-900 text-slate-400 hover:border-slate-800'
-                        }`}
+                        className={`px-3 py-1.5 rounded-full text-xs transition border ${active
+                          ? 'bg-purple-950/40 border-purple-500 text-purple-200'
+                          : 'bg-slate-950/60 border-slate-900 text-slate-400 hover:border-slate-800'
+                          }`}
                       >
                         {req.name}
                       </button>
@@ -479,11 +482,11 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isGenerating}
-                className="w-full mt-2 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 hover:from-indigo-500 hover:to-purple-500 disabled:from-slate-800 disabled:to-slate-800 text-white font-bold py-3 rounded-xl text-sm transition active:scale-98 shadow-md flex items-center justify-center gap-2 group cursor-pointer"
+                className="w-full mt-2 bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 hover:from-indigo-500 hover:to-purple-500 disabled:from-slate-800 disabled:to-slate-800 text-black dark:text-white font-bold py-3 rounded-xl text-sm transition active:scale-98 shadow-md flex items-center justify-center gap-2 group cursor-pointer"
               >
                 {isGenerating ? (
                   <>
-                    <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-4 w-4 text-black dark:text-white" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
@@ -502,11 +505,11 @@ export default function Home() {
 
           {/* 2. Library/Saved Designs */}
           <div className="bg-slate-900/50 border border-slate-900 rounded-2xl p-5 backdrop-blur-md shadow-lg flex flex-col gap-3.5">
-            <h3 className="text-sm font-extrabold text-white flex items-center gap-2 border-b border-slate-900 pb-3">
+            <h3 className="text-sm font-extrabold text-black dark:text-white flex items-center gap-2 border-b border-slate-900 pb-3">
               <FolderHeart className="w-4.5 h-4.5 text-purple-400" />
               Saved Layouts Library ({savedPlans.length})
             </h3>
-            
+
             {savedPlans.length === 0 ? (
               <div className="py-6 text-center text-xs text-slate-500 italic">
                 No designs saved yet. Generate a layout and save it!
@@ -523,11 +526,10 @@ export default function Home() {
                       }
                       confetti({ particleCount: 20 });
                     }}
-                    className={`p-3 rounded-xl border transition flex items-center justify-between group cursor-pointer ${
-                      activePlan?.id === planItem.id
-                        ? 'bg-indigo-950/35 border-indigo-500/60 text-white'
-                        : 'bg-slate-950/50 border-slate-900/60 hover:bg-slate-900/70 hover:border-slate-800 text-slate-350'
-                    }`}
+                    className={`p-3 rounded-xl border transition flex items-center justify-between group cursor-pointer ${activePlan?.id === planItem.id
+                      ? 'bg-indigo-950/35 border-indigo-500/60 text-black dark:text-white'
+                      : 'bg-slate-950/50 border-slate-900/60 hover:bg-slate-900/70 hover:border-slate-800 text-slate-350'
+                      }`}
                   >
                     <div className="flex flex-col gap-0.5 max-w-[75%]">
                       <span className="text-xs font-semibold truncate">{planItem.name}</span>
@@ -552,7 +554,7 @@ export default function Home() {
 
         {/* Right Column: Workspaces (9 cols) */}
         <div className="lg:col-span-9 flex flex-col gap-4 h-[850px] lg:h-auto min-h-[700px]">
-          
+
           {/* Workspace Tab Bar */}
           <div className="flex flex-wrap items-center justify-between gap-3 bg-slate-950/60 p-1.5 border border-slate-900 rounded-xl select-none shrink-0">
             <div className="flex flex-wrap gap-1">
@@ -568,11 +570,10 @@ export default function Home() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition ${
-                      activeTab === tab.id
-                        ? 'bg-indigo-600 text-white shadow shadow-indigo-600/10'
-                        : 'text-slate-400 hover:text-indigo-300 hover:bg-slate-900'
-                    }`}
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition ${activeTab === tab.id
+                      ? 'bg-indigo-600 text-black dark:text-white shadow shadow-indigo-600/10'
+                      : 'text-slate-400 hover:text-indigo-300 hover:bg-slate-900'
+                      }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
                     {tab.name}
@@ -580,7 +581,7 @@ export default function Home() {
                 );
               })}
             </div>
-            
+
             {activePlan && (
               <span className="text-[10px] text-indigo-400 bg-indigo-950/30 border border-indigo-900 px-2 py-0.5 rounded font-mono mr-2 hidden sm:block">
                 PLAN: {activePlan.name}
@@ -593,9 +594,9 @@ export default function Home() {
             {activePlan ? (
               <>
                 {activeTab === '2d' && (
-                  <FloorPlanner2D 
-                    plan={activePlan} 
-                    onChange={handlePlanChange} 
+                  <FloorPlanner2D
+                    plan={activePlan}
+                    onChange={handlePlanChange}
                   />
                 )}
 
@@ -617,7 +618,7 @@ export default function Home() {
                     <div className="md:w-72 flex flex-col gap-4 shrink-0 justify-between">
                       <div className="flex flex-col gap-3.5">
                         <div className="flex flex-col gap-1">
-                          <h3 className="text-sm font-extrabold text-white flex items-center gap-1.5">
+                          <h3 className="text-sm font-extrabold text-black dark:text-white flex items-center gap-1.5">
                             <Sparkles className="w-4 h-4 text-purple-400" />
                             AI Concept Visuals
                           </h3>
@@ -631,7 +632,7 @@ export default function Home() {
                           <select
                             value={imageTabStyle}
                             onChange={(e) => setImageTabStyle(e.target.value)}
-                            className="bg-slate-950 border border-slate-850 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
+                            className="bg-slate-950 border border-slate-850 rounded-lg px-2.5 py-1.5 text-xs text-black dark:text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
                           >
                             {['Modern', 'Minimalist', 'Luxury', 'Traditional'].map(st => (
                               <option key={st} value={st}>{st} Style</option>
@@ -645,7 +646,7 @@ export default function Home() {
                             value={aiPrompt}
                             onChange={(e) => setAiPrompt(e.target.value)}
                             rows={4}
-                            className="bg-slate-950 border border-slate-850 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 resize-none font-light leading-normal"
+                            className="bg-slate-950 border border-slate-850 rounded-lg px-3 py-2 text-xs text-black dark:text-white focus:outline-none focus:border-indigo-500 resize-none font-light leading-normal"
                           />
                         </div>
                       </div>
@@ -653,11 +654,11 @@ export default function Home() {
                       <button
                         onClick={handleGenerateConceptImage}
                         disabled={isGeneratingImage}
-                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-2.5 rounded-xl text-xs transition active:scale-98 shadow flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-black dark:text-white font-bold py-2.5 rounded-xl text-xs transition active:scale-98 shadow flex items-center justify-center gap-1.5 cursor-pointer"
                       >
                         {isGeneratingImage ? (
                           <>
-                            <svg className="animate-spin h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-3.5 w-3.5 text-black dark:text-white" fill="none" viewBox="0 0 24 24">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                             </svg>
@@ -714,11 +715,11 @@ export default function Home() {
       {showSettings && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative select-none">
-            <h3 className="text-base font-extrabold text-white flex items-center gap-2 mb-2">
+            <h3 className="text-base font-extrabold text-black dark:text-white flex items-center gap-2 mb-2">
               <Settings className="w-5 h-5 text-indigo-400" />
               Settings & Integrations
             </h3>
-            
+
             <p className="text-xs text-slate-400 leading-relaxed mb-4">
               Enter your own OpenAI API key. We store this credentials securely in your browser's local storage. This enables custom AI floor plan synthesis and custom DALL-E concept image generation.
             </p>
@@ -730,7 +731,7 @@ export default function Home() {
                 placeholder="sk-..."
                 value={userApiKey}
                 onChange={(e) => setUserApiKey(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-indigo-500 placeholder-slate-700 w-full"
+                className="bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-black dark:text-white font-mono focus:outline-none focus:border-indigo-500 placeholder-slate-700 w-full"
               />
             </div>
 
@@ -741,10 +742,10 @@ export default function Home() {
               >
                 Cancel
               </button>
-              
+
               <button
                 onClick={() => handleSaveApiKey(userApiKey)}
-                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-white transition shadow shadow-indigo-600/20"
+                className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-black dark:text-white transition shadow shadow-indigo-600/20"
               >
                 Save Changes
               </button>

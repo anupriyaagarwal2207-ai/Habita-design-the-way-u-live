@@ -4,34 +4,295 @@
   --animate-spin-slow: spin 15s linear infinite;
 }
 
+/* ─── Light Theme (default) ─── */
 :root {
+  --background: #FDF6EC;
+  --foreground: #1a1a2e;
+  --surface: #F5EDDF;
+  --surface-elevated: #FFF8EE;
+  --surface-deep: #EDE4D4;
+  --border-color: #D4C9B5;
+  --border-subtle: #E8DFD0;
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a5a;
+  --text-muted: #7a7a8a;
+  --scrollbar-track: #EDE4D4;
+  --scrollbar-thumb: #C4B9A5;
+  --scrollbar-hover: #6366f1;
+}
+
+/* ─── Dark Theme ─── */
+.dark {
   --background: #070b13;
   --foreground: #f8fafc;
+  --surface: rgba(15, 23, 42, 0.5);
+  --surface-elevated: rgba(15, 23, 42, 0.6);
+  --surface-deep: rgba(2, 6, 23, 0.8);
+  --border-color: rgb(30, 41, 59);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --scrollbar-track: #070b13;
+  --scrollbar-thumb: #1e293b;
+  --scrollbar-hover: #312e81;
 }
 
 body {
-  background-color: #070b13;
-  color: #f8fafc;
+  background-color: var(--background);
+  color: var(--foreground);
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar for sleek dashboard feel */
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Light-mode overrides for hardcoded dark background/border/text classes.
+   These only apply when .dark is NOT on the root element.
+   Dark theme stays exactly as-is because these rules target :not(.dark).
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Surface / card backgrounds ──────────────────────────────────────────── */
+:root:not(.dark) .bg-slate-900\/50,
+:root:not(.dark) .bg-slate-900\/40,
+:root:not(.dark) .bg-slate-900\/60,
+:root:not(.dark) .bg-slate-900\/70 {
+  background-color: var(--surface) !important;
+}
+
+:root:not(.dark) .bg-slate-950\/50,
+:root:not(.dark) .bg-slate-950\/60,
+:root:not(.dark) .bg-slate-950\/80,
+:root:not(.dark) .bg-slate-950\/40,
+:root:not(.dark) .bg-slate-950 {
+  background-color: var(--surface-deep) !important;
+}
+
+:root:not(.dark) .bg-slate-900\/10 {
+  background-color: rgba(237, 228, 212, 0.5) !important;
+}
+
+:root:not(.dark) .bg-slate-950\/80.backdrop-blur-md,
+:root:not(.dark) .bg-slate-950\/60 {
+  background-color: var(--surface-deep) !important;
+}
+
+/* Navbar scrolled state */
+:root:not(.dark) .bg-white\/90 {
+  background-color: rgba(253, 246, 236, 0.95) !important;
+}
+
+/* Designer header */
+:root:not(.dark) .bg-slate-950\/80 {
+  background-color: rgba(253, 246, 236, 0.95) !important;
+}
+
+
+
+/* ── Borders ─────────────────────────────────────────────────────────────── */
+:root:not(.dark) .border-slate-900,
+:root:not(.dark) .border-slate-900\/60,
+:root:not(.dark) .border-slate-800,
+:root:not(.dark) .border-slate-800\/80,
+:root:not(.dark) .border-slate-850,
+:root:not(.dark) .border-slate-850\/60,
+:root:not(.dark) .border-slate-850\/80 {
+  border-color: var(--border-color) !important;
+}
+
+:root:not(.dark) .border-white\/5,
+:root:not(.dark) .border-white\/8,
+:root:not(.dark) .border-white\/10 {
+  border-color: var(--border-subtle) !important;
+}
+
+/* ── Text colors ─────────────────────────────────────────────────────────── */
+:root:not(.dark) .text-slate-300,
+:root:not(.dark) .text-slate-200,
+:root:not(.dark) .text-slate-250,
+:root:not(.dark) .text-slate-350 {
+  color: var(--text-secondary) !important;
+}
+
+:root:not(.dark) .text-slate-400,
+:root:not(.dark) .text-slate-450,
+:root:not(.dark) .text-slate-455,
+:root:not(.dark) .text-slate-500 {
+  color: var(--text-muted) !important;
+}
+
+:root:not(.dark) .text-slate-550,
+:root:not(.dark) .text-slate-600,
+:root:not(.dark) .text-slate-650,
+:root:not(.dark) .text-slate-700 {
+  color: #9a9aaa !important;
+}
+
+/* White text in light mode should be dark */
+:root:not(.dark) .text-black {
+  color: #1a1a2e !important;
+}
+
+/* Pill / badge colors for light mode */
+:root:not(.dark) .text-indigo-200 {
+  color: #4338ca !important;
+}
+
+:root:not(.dark) .text-indigo-300 {
+  color: #4f46e5 !important;
+}
+
+:root:not(.dark) .text-purple-200 {
+  color: #7c3aed !important;
+}
+
+:root:not(.dark) .text-violet-300 {
+  color: #7c3aed !important;
+}
+
+:root:not(.dark) .text-pink-300 {
+  color: #db2777 !important;
+}
+
+:root:not(.dark) .text-emerald-300 {
+  color: #059669 !important;
+}
+
+/* ── Hover states ────────────────────────────────────────────────────────── */
+:root:not(.dark) .hover\:bg-slate-800:hover,
+:root:not(.dark) .hover\:bg-slate-900:hover,
+:root:not(.dark) .hover\:bg-slate-900\/70:hover,
+:root:not(.dark) .hover\:bg-slate-850\/20:hover,
+:root:not(.dark) .hover\:bg-slate-850\/30:hover {
+  background-color: #E8DFD0 !important;
+}
+
+:root:not(.dark) .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+:root:not(.dark) .hover\:border-slate-600:hover,
+:root:not(.dark) .hover\:border-slate-800:hover {
+  border-color: #b8ad99 !important;
+}
+
+:root:not(.dark) .hover\:text-slate-200:hover,
+:root:not(.dark) .hover\:text-slate-300:hover {
+  color: #1a1a2e !important;
+}
+
+/* ── Focus states ────────────────────────────────────────────────────────── */
+:root:not(.dark) .focus\:border-indigo-500:focus {
+  border-color: #6366f1 !important;
+}
+
+/* ── Semi-transparent white backgrounds in light mode ────────────────────── */
+:root:not(.dark) .bg-white\/2,
+:root:not(.dark) .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+
+
+/* ── Section gradient backgrounds ────────────────────────────────────────── */
+:root:not(.dark) .via-slate-900\/30 {
+  --tw-gradient-via: rgba(237, 228, 212, 0.4) !important;
+}
+
+:root:not(.dark) .from-indigo-900\/30 {
+  --tw-gradient-from: rgba(99, 102, 241, 0.08) !important;
+}
+
+:root:not(.dark) .via-purple-900\/20 {
+  --tw-gradient-via: rgba(139, 92, 246, 0.06) !important;
+}
+
+:root:not(.dark) .to-pink-900\/20 {
+  --tw-gradient-to: rgba(236, 72, 153, 0.06) !important;
+}
+
+/* ── Configurator card pills ─────────────────────────────────────────────── */
+:root:not(.dark) .bg-indigo-500\/10 {
+  background-color: rgba(99, 102, 241, 0.08) !important;
+}
+
+:root:not(.dark) .bg-violet-500\/10 {
+  background-color: rgba(139, 92, 246, 0.08) !important;
+}
+
+:root:not(.dark) .bg-pink-500\/10 {
+  background-color: rgba(236, 72, 153, 0.08) !important;
+}
+
+:root:not(.dark) .bg-emerald-500\/10 {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+}
+
+/* Badge border colors */
+:root:not(.dark) .border-indigo-500\/25 {
+  border-color: rgba(99, 102, 241, 0.25) !important;
+}
+
+:root:not(.dark) .border-violet-500\/25 {
+  border-color: rgba(139, 92, 246, 0.25) !important;
+}
+
+:root:not(.dark) .border-pink-500\/25 {
+  border-color: rgba(236, 72, 153, 0.25) !important;
+}
+
+:root:not(.dark) .border-emerald-500\/25 {
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+/* ── Input and select backgrounds ────────────────────────────────────────── */
+:root:not(.dark) select.bg-slate-950,
+:root:not(.dark) input.bg-slate-950,
+:root:not(.dark) textarea.bg-slate-950,
+:root:not(.dark) input.bg-slate-950\/80 {
+  background-color: #FFFDF7 !important;
+  border-color: var(--border-color) !important;
+  color: #1a1a2e !important;
+}
+
+/* ── Modals ──────────────────────────────────────────────────────────────── */
+:root:not(.dark) .bg-slate-950\/80.backdrop-blur-md {
+  background-color: rgba(253, 246, 236, 0.85) !important;
+}
+
+:root:not(.dark) .bg-slate-900 {
+  background-color: var(--surface) !important;
+}
+
+/* ── Progress bar track ──────────────────────────────────────────────────── */
+:root:not(.dark) .bg-slate-850 {
+  background-color: #D4C9B5 !important;
+}
+
+/* ── Active tab / button styling ─────────────────────────────────────────── */
+:root:not(.dark) .bg-slate-800 {
+  background-color: #E8DFD0 !important;
+}
+
+:root:not(.dark) .hover\:bg-slate-700:hover {
+  background-color: #D4C9B5 !important;
+}
+
+/* Custom Scrollbar — adapts to theme */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #070b13;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #312e81;
+  background: var(--scrollbar-hover);
 }
 
 /* Confetti wrapper fixes */

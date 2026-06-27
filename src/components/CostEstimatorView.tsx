@@ -24,7 +24,7 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
 
   return (
     <div className="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6 backdrop-blur-md shadow-2xl h-full flex flex-col gap-6">
-      
+
       {/* Top Banner: Total Cost Summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-950/50 border border-slate-850 p-5 rounded-2xl">
         <div className="flex items-center gap-3.5 border-b md:border-b-0 md:border-r border-slate-850 pb-3.5 md:pb-0 md:pr-4">
@@ -33,7 +33,7 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] text-slate-500 font-bold tracking-wider uppercase">Estimated Total Cost</span>
-            <span className="text-2xl font-black text-white">{formatCurrency(totalCost)}</span>
+            <span className="text-2xl font-black text-black dark:text-white">{formatCurrency(totalCost)}</span>
           </div>
         </div>
 
@@ -43,7 +43,7 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] text-slate-500 font-bold tracking-wider uppercase">Build Rate per Sq. Ft.</span>
-            <span className="text-xl font-bold text-white">{formatCurrency(costPerSqFt)} / sq.ft</span>
+            <span className="text-xl font-bold text-black dark:text-white">{formatCurrency(costPerSqFt)} / sq.ft</span>
           </div>
         </div>
 
@@ -53,7 +53,7 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
           </div>
           <div className="flex flex-col">
             <span className="text-[10px] text-slate-500 font-bold tracking-wider uppercase">Total Built-Up Area</span>
-            <span className="text-xl font-bold text-white">{area} Sq. Ft. <span className="text-xs text-slate-450 font-normal">({config.plotWidth}′ × {config.plotLength}′)</span></span>
+            <span className="text-xl font-bold text-black dark:text-white">{area} Sq. Ft. <span className="text-xs text-slate-450 font-normal">({config.plotWidth}′ × {config.plotLength}′)</span></span>
           </div>
         </div>
       </div>
@@ -81,10 +81,10 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
                   <span className="text-slate-500 bg-slate-900 px-1.5 py-0.5 rounded text-[10px]">{category.percentage}%</span>
                 </div>
               </div>
-              
+
               {/* Progress bar */}
               <div className="w-full h-2 rounded-full bg-slate-850 overflow-hidden">
-                <div 
+                <div
                   className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500"
                   style={{ width: `${category.percentage}%` }}
                 />
@@ -99,11 +99,11 @@ export default function CostEstimatorView({ plan }: CostEstimatorViewProps) {
           ))}
         </div>
       </div>
-      
+
       {/* Footer warning info */}
       <div className="text-[10px] text-slate-550 border-t border-slate-850/80 pt-3 flex flex-col sm:flex-row items-center justify-between gap-2">
         <span>* Estimates are based on average national builder pricing rates and are subject to localized material fluctuations.</span>
-        <button 
+        <button
           onClick={() => {
             alert('Cost report downloaded successfully (JSON mock)');
           }}

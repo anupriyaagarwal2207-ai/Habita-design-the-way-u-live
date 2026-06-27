@@ -25,6 +25,8 @@ import {
   IndianRupee,
 } from 'lucide-react';
 
+import ThemeToggle from "@/components/ThemeToggle";
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 type DesignStyle = 'Modern' | 'Minimalist' | 'Luxury' | 'Traditional';
 
@@ -187,20 +189,26 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b13] text-slate-100 overflow-x-hidden font-sans selection:bg-indigo-500/40">
+    <div
+      className="min-h-screen overflow-x-hidden font-sans"
+      style={{
+        backgroundColor: "var(--background)",
+        color: "var(--foreground)",
+      }}
+    >
 
       {/* ── NAVBAR ─────────────────────────────────────────────────────────── */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-            ? 'bg-[#070b13]/90 backdrop-blur-xl border-b border-white/5 shadow-xl shadow-black/40'
-            : 'bg-transparent'
+          ? "bg-white/90 dark:bg-[#070b13]/90 backdrop-blur-xl"
+          : "bg-transparent"
           }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-              <Compass className="w-4 h-4 text-white" style={{ animation: 'spin 12s linear infinite' }} />
+              <Compass className="w-4 h-4 text-black dark:text-white" style={{ animation: 'spin 12s linear infinite' }} />
             </div>
             <div>
               <span className="font-black tracking-tight bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent text-5xl leading-none block drop-shadow-[0_0_18px_rgba(139,92,246,0.7)]">
@@ -211,21 +219,24 @@ export default function HomePage() {
           </div>
 
           {/* Nav links */}
-          <div className="hidden md:flex items-center gap-8 text-sm text-slate-400 font-medium">
-            <a href="#features" className="hover:text-white transition">Features</a>
-            <a href="#gallery" className="hover:text-white transition">Gallery</a>
-            <a href="#configurator" className="hover:text-white transition">Configurator</a>
+          <div className="hidden md:flex items-center gap-4 text-sm text-slate-400 font-medium">
+            <a href="#features" className="hover:text-black dark:text-white transition">Features</a>
+            <a href="#gallery" className="hover:text-black dark:text-white transition">Gallery</a>
+            <a href="#configurator" className="hover:text-black dark:text-white transition">Configurator</a>
           </div>
 
           {/* CTA */}
-          <Link
-            href="/designer"
-            onClick={launchDesigner}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-indigo-600/25 active:scale-95"
-          >
-            <Sparkles className="w-4 h-4" />
-            Open Designer
-          </Link>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <Link
+              href="/designer"
+              onClick={launchDesigner}
+              className="flex items-center gap-1 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-semibold text-sm transition-all duration-200 shadow-lg shadow-indigo-600/25 active:scale-95"
+            >
+              <Sparkles className="w-4 h-4" />
+              Open Designer
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -243,8 +254,8 @@ export default function HomePage() {
             style={{ filter: 'brightness(0.35) saturate(1.2)' }}
           />
           {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070b13]/60 via-transparent to-[#070b13]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#070b13]/50 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FDF6EC]/60 via-transparent to-[#FDF6EC] dark:from-[#070b13]/60 dark:via-transparent dark:to-[#070b13]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FDF6EC]/50 via-transparent to-transparent dark:from-[#070b13]/50 dark:via-transparent dark:to-transparent" />
         </div>
 
         {/* Floating orbs */}
@@ -259,13 +270,13 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none mb-6">
-            <span className="text-white">Design your</span>
+            <span className="text-black dark:text-white">Design your</span>
             <br />
             <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
               dream home
             </span>
             <br />
-            <span className="text-white">in minutes.</span>
+            <span className="text-black dark:text-white">in minutes.</span>
           </h1>
 
           <p className="text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
@@ -277,7 +288,7 @@ export default function HomePage() {
             <Link
               href="/designer"
               onClick={launchDesigner}
-              className="flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-base transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
+              className="flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-bold text-base transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
             >
               <Sparkles className="w-5 h-5" />
               Start Designing for Free
@@ -285,7 +296,7 @@ export default function HomePage() {
             </Link>
             <a
               href="#features"
-              className="flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-semibold text-base transition-all duration-200 backdrop-blur-sm"
+              className="flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-black dark:text-white font-semibold text-base transition-all duration-200 backdrop-blur-sm"
             >
               <Play className="w-4 h-4" />
               See How It Works
@@ -324,7 +335,7 @@ export default function HomePage() {
             <Star className="w-3 h-3" />
             Everything you need
           </div>
-          <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-black text-black dark:text-white mb-4">
             A complete design studio
           </h2>
           <p className="text-slate-400 text-lg max-w-xl mx-auto">
@@ -340,9 +351,9 @@ export default function HomePage() {
               style={{ animationDelay: `${i * 60}ms` }}
             >
               <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${f.color} shadow-lg mb-5 group-hover:scale-110 transition-transform duration-300`}>
-                <f.icon className="w-5 h-5 text-white" />
+                <f.icon className="w-5 h-5 text-black dark:text-white" />
               </div>
-              <h3 className="text-white font-bold text-lg mb-2">{f.title}</h3>
+              <h3 className="text-black dark:text-white font-bold text-lg mb-2">{f.title}</h3>
               <p className="text-slate-400 text-sm leading-relaxed">{f.description}</p>
             </div>
           ))}
@@ -357,7 +368,7 @@ export default function HomePage() {
               <Sparkles className="w-3 h-3" />
               AI Generated Renders
             </div>
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">
+            <h2 className="text-4xl sm:text-5xl font-black text-black dark:text-white mb-4">
               Stunning results, instantly
             </h2>
             <p className="text-slate-400 text-lg max-w-xl mx-auto">
@@ -377,10 +388,10 @@ export default function HomePage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6">
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white mb-2 inline-block">
+                <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-black dark:text-white mb-2 inline-block">
                   {GALLERY[activeGallery].tag}
                 </span>
-                <h3 className="text-white text-2xl font-black">{GALLERY[activeGallery].label}</h3>
+                <h3 className="text-black dark:text-white text-2xl font-black">{GALLERY[activeGallery].label}</h3>
                 <p className="text-slate-300 text-sm">{GALLERY[activeGallery].style} Style</p>
               </div>
             </div>
@@ -392,19 +403,19 @@ export default function HomePage() {
                   key={img.src}
                   onClick={() => setActiveGallery(idx)}
                   className={`relative rounded-2xl overflow-hidden h-36 group transition-all duration-300 ${activeGallery === idx
-                      ? 'ring-2 ring-indigo-500 ring-offset-2 ring-offset-[#070b13] scale-[1.02]'
-                      : 'opacity-60 hover:opacity-90'
+                    ? 'ring-2 ring-indigo-500 ring-offset-2 ring-offset-[#FDF6EC] dark:ring-offset-[#070b13] scale-[1.02]'
+                    : 'opacity-60 hover:opacity-90'
                     }`}
                 >
                   <Image src={img.src} alt={img.label} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute bottom-3 left-3">
-                    <p className="text-white font-bold text-sm">{img.label}</p>
+                    <p className="text-black dark:text-white font-bold text-sm">{img.label}</p>
                     <p className="text-slate-300 text-xs">{img.style}</p>
                   </div>
                   {activeGallery === idx && (
                     <div className="absolute top-3 right-3 w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center">
-                      <CheckCircle2 className="w-3 h-3 text-white" />
+                      <CheckCircle2 className="w-3 h-3 text-black dark:text-white" />
                     </div>
                   )}
                 </button>
@@ -436,7 +447,7 @@ export default function HomePage() {
               <Cpu className="w-3 h-3" />
               Quick Start
             </div>
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight">
+            <h2 className="text-4xl sm:text-5xl font-black text-black dark:text-white mb-5 leading-tight">
               Configure your dream home in seconds
             </h2>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">
@@ -458,7 +469,7 @@ export default function HomePage() {
             <div className="absolute -inset-4 bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 rounded-3xl blur-2xl" />
 
             <div className="relative bg-slate-900/60 border border-white/8 rounded-3xl p-8 backdrop-blur-sm">
-              <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
+              <h3 className="text-black dark:text-white font-bold text-lg mb-6 flex items-center gap-2">
                 <Home className="w-5 h-5 text-indigo-400" />
                 House Configuration
               </h3>
@@ -472,8 +483,8 @@ export default function HomePage() {
                       key={s.id}
                       onClick={() => setConfig(p => ({ ...p, style: s.id }))}
                       className={`flex items-center gap-2.5 p-3 rounded-xl border text-sm font-semibold transition-all duration-200 ${config.style === s.id
-                          ? 'bg-indigo-600/20 border-indigo-500/60 text-indigo-200'
-                          : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:border-slate-600 hover:text-slate-200'
+                        ? 'bg-indigo-600/20 border-indigo-500/60 text-indigo-200'
+                        : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:border-slate-600 hover:text-slate-200'
                         }`}
                     >
                       <span className="text-lg">{s.emoji}</span>
@@ -495,8 +506,8 @@ export default function HomePage() {
                         key={n}
                         onClick={() => setConfig(p => ({ ...p, bedrooms: n }))}
                         className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${config.bedrooms === n
-                            ? 'bg-indigo-600 text-white'
-                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                          ? 'bg-indigo-600 text-black dark:text-white'
+                          : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
                           }`}
                       >
                         {n}
@@ -514,8 +525,8 @@ export default function HomePage() {
                         key={n}
                         onClick={() => setConfig(p => ({ ...p, bathrooms: n }))}
                         className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${config.bathrooms === n
-                            ? 'bg-indigo-600 text-white'
-                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                          ? 'bg-indigo-600 text-black dark:text-white'
+                          : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
                           }`}
                       >
                         {n}
@@ -537,7 +548,7 @@ export default function HomePage() {
                       min={15} max={120}
                       value={config.plotWidth}
                       onChange={e => setConfig(p => ({ ...p, plotWidth: Number(e.target.value) }))}
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition"
+                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-black dark:text-white focus:outline-none focus:border-indigo-500 transition"
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500">W</span>
                   </div>
@@ -547,7 +558,7 @@ export default function HomePage() {
                       min={20} max={200}
                       value={config.plotLength}
                       onChange={e => setConfig(p => ({ ...p, plotLength: Number(e.target.value) }))}
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition"
+                      className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-black dark:text-white focus:outline-none focus:border-indigo-500 transition"
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500">L</span>
                   </div>
@@ -582,8 +593,8 @@ export default function HomePage() {
                       key={r.id}
                       onClick={() => toggleRequirement(r.id)}
                       className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs font-semibold transition-all ${config.requirements.includes(r.id)
-                          ? 'bg-emerald-600/20 border-emerald-500/50 text-emerald-300'
-                          : 'bg-slate-950/50 border-slate-800 text-slate-500 hover:border-slate-600'
+                        ? 'bg-emerald-600/20 border-emerald-500/50 text-emerald-300'
+                        : 'bg-slate-950/50 border-slate-800 text-slate-500 hover:border-slate-600'
                         }`}
                     >
                       <r.icon className="w-3.5 h-3.5" />
@@ -598,7 +609,7 @@ export default function HomePage() {
               <Link
                 href="/designer"
                 onClick={launchDesigner}
-                className="flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-base transition-all duration-200 shadow-xl shadow-indigo-600/25 active:scale-95 group"
+                className="flex items-center justify-center gap-2.5 w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-bold text-base transition-all duration-200 shadow-xl shadow-indigo-600/25 active:scale-95 group"
               >
                 <Sparkles className="w-5 h-5" />
                 Launch Designer
@@ -615,7 +626,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(99,102,241,0.15)_0%,_transparent_70%)]" />
 
         <div className="relative max-w-3xl mx-auto text-center px-6">
-          <h2 className="text-4xl sm:text-5xl font-black text-white mb-5 leading-tight">
+          <h2 className="text-4xl sm:text-5xl font-black text-black dark:text-white mb-5 leading-tight">
             Ready to build your dream home?
           </h2>
           <p className="text-slate-300 text-lg mb-10 leading-relaxed">
@@ -623,7 +634,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/designer"
-            className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-lg transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
+            className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-black dark:text-white font-black text-lg transition-all duration-200 shadow-2xl shadow-indigo-600/30 active:scale-95 group"
           >
             <Sparkles className="w-6 h-6" />
             Start Designing — It&apos;s Free
@@ -637,7 +648,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center">
-              <Compass className="w-3.5 h-3.5 text-white" />
+              <Compass className="w-3.5 h-3.5 text-black dark:text-white" />
             </div>
             <span className="text-slate-400 text-sm font-semibold">
               Habita — <span className="text-slate-500">design the way u live</span>

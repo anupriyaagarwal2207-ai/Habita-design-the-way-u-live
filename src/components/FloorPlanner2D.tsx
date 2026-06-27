@@ -2,15 +2,15 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Room, Furniture, RoomType, FurnitureType, HousePlan, DesignConfig } from '../types/designer';
-import { 
-  Square, 
-  Trash2, 
-  RotateCw, 
-  Plus, 
-  Move, 
-  Check, 
-  Grid, 
-  Maximize2, 
+import {
+  Square,
+  Trash2,
+  RotateCw,
+  Plus,
+  Move,
+  Check,
+  Grid,
+  Maximize2,
   HelpCircle,
   Undo
 } from 'lucide-react';
@@ -52,7 +52,7 @@ const FURNITURE_SIZES: Record<FurnitureType, { width: number; height: number; na
 
 export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) {
   const { config, rooms, furniture } = plan;
-  
+
   // Canvas configuration
   const [scale, setScale] = useState(16); // Pixels per foot
   const [pan, setPan] = useState({ x: 60, y: 60 });
@@ -85,7 +85,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
       const containerH = containerRef.current.clientHeight;
       const plotW_px = config.plotWidth * scale;
       const plotL_px = config.plotLength * scale;
-      
+
       const newScale = Math.min(
         (containerW - 80) / config.plotWidth,
         (containerH - 80) / config.plotLength,
@@ -105,23 +105,23 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
     const rect = svgRef.current.getBoundingClientRect();
     const clientX = e.clientX;
     const clientY = e.clientY;
-    
+
     // Convert screen coordinates to SVG scale/pan coordinates (in feet)
     const x = (clientX - rect.left - pan.x) / scale;
     const y = (clientY - rect.top - pan.y) / scale;
-    
+
     return { x, y };
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     // Left click only
     if (e.button !== 0) return;
-    
+
     // Clear selection if clicking on grid background
     if (e.target === svgRef.current || (e.target as SVGElement).classList.contains('grid-background')) {
       setSelectedRoomId(null);
       setSelectedFurnitureId(null);
-      
+
       // Middle click or space+click for panning could be added, or simple drag pan if no item is dragged
       setDragInfo({
         type: 'resize', // hack for canvas pan
@@ -138,7 +138,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
     e.stopPropagation();
     setSelectedRoomId(roomId);
     setSelectedFurnitureId(null);
-    
+
     const room = rooms.find(r => r.id === roomId);
     if (!room) return;
 
@@ -156,7 +156,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
     e.stopPropagation();
     setSelectedFurnitureId(furnitureId);
     setSelectedRoomId(null);
-    
+
     const item = furniture.find(f => f.id === furnitureId);
     if (!item) return;
 
@@ -175,7 +175,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
     e.preventDefault();
     setSelectedRoomId(roomId);
     setSelectedFurnitureId(null);
-    
+
     const room = rooms.find(r => r.id === roomId);
     if (!room) return;
 
@@ -220,11 +220,11 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
           if (r.id === dragInfo.id) {
             let newX = snap(dragInfo.initialX + dx);
             let newY = snap(dragInfo.initialY + dy);
-            
+
             // Constrain within plot
             newX = Math.max(0, Math.min(config.plotWidth - r.width, newX));
             newY = Math.max(0, Math.min(config.plotLength - r.height, newY));
-            
+
             return { ...r, x: newX, y: newY };
           }
           return r;
@@ -309,7 +309,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
   // Actions
   const handleAddRoom = (type: RoomType) => {
     const id = Math.random().toString(36).substring(2, 9);
-    
+
     // Position room in the middle of plot
     const rWidth = 12;
     const rHeight = 12;
@@ -338,7 +338,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
   const handleAddFurniture = (type: FurnitureType) => {
     const id = Math.random().toString(36).substring(2, 9);
     const size = FURNITURE_SIZES[type];
-    
+
     // Find room center or plot center
     let fx = Math.max(0, Math.round((config.plotWidth - size.width) / 2));
     let fy = Math.max(0, Math.round((config.plotLength - size.height) / 2));
@@ -394,11 +394,11 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
 
   const handleRotateSelectedFurniture = () => {
     if (!selectedFurnitureId) return;
-    
+
     const updatedFurniture = furniture.map(f => {
       if (f.id === selectedFurnitureId) {
         const newRot = (f.rotation + 90) % 360;
-        
+
         // Swap width & height for visual correctness on rotation if rotation is 90/270
         // (but actually Three.js handle rotation. Let's just update rotation number)
         return {
@@ -447,16 +447,16 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
   // Generate SVG Grid Pattern lines
   const gridLines = [];
   const gridSpacing = 5; // Major lines every 5 feet
-  
+
   for (let i = 0; i <= config.plotWidth; i += gridSpacing) {
     gridLines.push(
-      <line 
-        key={`vx-${i}`} 
-        x1={i * scale} 
-        y1={0} 
-        x2={i * scale} 
-        y2={config.plotLength * scale} 
-        stroke="#1E293B" 
+      <line
+        key={`vx-${i}`}
+        x1={i * scale}
+        y1={0}
+        x2={i * scale}
+        y2={config.plotLength * scale}
+        stroke="#1E293B"
         strokeWidth={1}
         strokeDasharray="2 2"
       />
@@ -464,13 +464,13 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
   }
   for (let i = 0; i <= config.plotLength; i += gridSpacing) {
     gridLines.push(
-      <line 
-        key={`hy-${i}`} 
-        x1={0} 
-        y1={i * scale} 
-        x2={config.plotWidth * scale} 
-        y2={i * scale} 
-        stroke="#1E293B" 
+      <line
+        key={`hy-${i}`}
+        x1={0}
+        y1={i * scale}
+        x2={config.plotWidth * scale}
+        y2={i * scale}
+        stroke="#1E293B"
         strokeWidth={1}
         strokeDasharray="2 2"
       />
@@ -478,8 +478,8 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
   }
 
   return (
-    <div className="flex h-full w-full bg-slate-950 text-white rounded-2xl overflow-hidden border border-slate-800/80 shadow-2xl backdrop-blur-md">
-      
+    <div className="flex h-full w-full bg-slate-950 text-black dark:text-white rounded-2xl overflow-hidden border border-slate-800/80 shadow-2xl backdrop-blur-md">
+
       {/* Left panel: Add components */}
       <div className="w-52 border-r border-slate-800 bg-slate-900/60 p-3 overflow-y-auto flex flex-col gap-5 select-none shrink-0">
         <div>
@@ -491,9 +491,9 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
                 onClick={() => handleAddRoom(type)}
                 className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-xs bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/50 text-slate-200 transition active:scale-95 text-left font-medium capitalize group"
               >
-                <span 
+                <span
                   className="w-2.5 h-2.5 rounded-full shrink-0 group-hover:scale-110 transition"
-                  style={{ backgroundColor: ROOM_COLORS[type] }} 
+                  style={{ backgroundColor: ROOM_COLORS[type] }}
                 />
                 {type}
               </button>
@@ -519,20 +519,20 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
 
         <div className="mt-auto border-t border-slate-800/80 pt-4 flex flex-col gap-2.5">
           <label className="flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
-            <input 
-              type="checkbox" 
-              checked={snapToGrid} 
+            <input
+              type="checkbox"
+              checked={snapToGrid}
               onChange={() => setSnapToGrid(!snapToGrid)}
-              className="rounded bg-slate-800 border-slate-700 text-indigo-500 focus:ring-0 focus:ring-offset-0" 
+              className="rounded bg-slate-800 border-slate-700 text-indigo-500 focus:ring-0 focus:ring-offset-0"
             />
             Snap to grid (0.5 ft)
           </label>
           <label className="flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
-            <input 
-              type="checkbox" 
-              checked={showMeasurements} 
+            <input
+              type="checkbox"
+              checked={showMeasurements}
               onChange={() => setShowMeasurements(!showMeasurements)}
-              className="rounded bg-slate-800 border-slate-700 text-indigo-500 focus:ring-0 focus:ring-offset-0" 
+              className="rounded bg-slate-800 border-slate-700 text-indigo-500 focus:ring-0 focus:ring-offset-0"
             />
             Show measurements
           </label>
@@ -540,7 +540,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
       </div>
 
       {/* Center panel: Canvas */}
-      <div 
+      <div
         ref={containerRef}
         className="flex-1 relative overflow-hidden bg-slate-950 flex items-center justify-center cursor-grab active:cursor-grabbing"
         onMouseDown={handleMouseDown}
@@ -648,27 +648,27 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
                   {isSelected && (
                     <>
                       {/* Top Edge */}
-                      <line 
-                        x1={rx} y1={ry} x2={rx + rw} y2={ry} 
-                        stroke="#F59E0B" strokeWidth={5} className="cursor-ns-resize" 
+                      <line
+                        x1={rx} y1={ry} x2={rx + rw} y2={ry}
+                        stroke="#F59E0B" strokeWidth={5} className="cursor-ns-resize"
                         onMouseDown={(e) => startResizeRoom(room.id, 'n', e)}
                       />
                       {/* Bottom Edge */}
-                      <line 
-                        x1={rx} y1={ry + rh} x2={rx + rw} y2={ry + rh} 
-                        stroke="#F59E0B" strokeWidth={5} className="cursor-ns-resize" 
+                      <line
+                        x1={rx} y1={ry + rh} x2={rx + rw} y2={ry + rh}
+                        stroke="#F59E0B" strokeWidth={5} className="cursor-ns-resize"
                         onMouseDown={(e) => startResizeRoom(room.id, 's', e)}
                       />
                       {/* Left Edge */}
-                      <line 
-                        x1={rx} y1={ry} x2={rx} y2={ry + rh} 
-                        stroke="#F59E0B" strokeWidth={5} className="cursor-ew-resize" 
+                      <line
+                        x1={rx} y1={ry} x2={rx} y2={ry + rh}
+                        stroke="#F59E0B" strokeWidth={5} className="cursor-ew-resize"
                         onMouseDown={(e) => startResizeRoom(room.id, 'w', e)}
                       />
                       {/* Right Edge */}
-                      <line 
-                        x1={rx + rw} y1={ry} x2={rx + rw} y2={ry + rh} 
-                        stroke="#F59E0B" strokeWidth={5} className="cursor-ew-resize" 
+                      <line
+                        x1={rx + rw} y1={ry} x2={rx + rw} y2={ry + rh}
+                        stroke="#F59E0B" strokeWidth={5} className="cursor-ew-resize"
                         onMouseDown={(e) => startResizeRoom(room.id, 'e', e)}
                       />
                       {/* Corners */}
@@ -695,7 +695,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
               const cy = fy + fh / 2;
 
               return (
-                <g 
+                <g
                   key={item.id}
                   transform={`rotate(${item.rotation}, ${cx}, ${cy})`}
                 >
@@ -771,21 +771,21 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
 
         {/* Floating Zoom & Controls */}
         <div className="absolute bottom-4 left-4 flex gap-1.5 bg-slate-900/95 border border-slate-800 p-1.5 rounded-xl shadow-lg backdrop-blur z-10 select-none">
-          <button 
-            onClick={() => handleZoom(1.15)} 
-            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-100 text-xs font-bold transition flex items-center justify-center"
+          <button
+            onClick={() => handleZoom(1.15)}
+            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-slate-100 text-xs font-bold transition flex items-center justify-center"
             title="Zoom In"
           >
             +
           </button>
-          <button 
-            onClick={() => handleZoom(0.85)} 
-            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-100 text-xs font-bold transition flex items-center justify-center"
+          <button
+            onClick={() => handleZoom(0.85)}
+            className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-900 dark:text-slate-100 text-xs font-bold transition flex items-center justify-center"
             title="Zoom Out"
           >
             −
           </button>
-          <button 
+          <button
             onClick={() => {
               if (containerRef.current) {
                 const w = containerRef.current.clientWidth;
@@ -815,7 +815,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
       {/* Right panel: Selection Inspector */}
       <div className="w-60 border-l border-slate-800 bg-slate-900/60 p-4 flex flex-col gap-4 select-none shrink-0 overflow-y-auto">
         <h3 className="text-sm font-semibold text-slate-300 tracking-wider uppercase border-b border-slate-800 pb-2">Properties</h3>
-        
+
         {selectedRoom ? (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
@@ -824,7 +824,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
                 type="text"
                 value={selectedRoom.name}
                 onChange={(e) => handleRoomNameChange(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition"
+                className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-black dark:text-white focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
 
@@ -884,7 +884,7 @@ export default function FloorPlanner2D({ plan, onChange }: FloorPlanner2DProps) 
                 <RotateCw className="w-4 h-4 text-indigo-400" />
                 Rotate 90°
               </button>
-              
+
               <button
                 onClick={handleDeleteSelected}
                 className="flex items-center justify-center gap-2 bg-red-950/30 hover:bg-red-900/50 border border-red-900/40 hover:border-red-800 text-red-200 py-2.5 rounded-xl text-xs font-semibold transition active:scale-98"
